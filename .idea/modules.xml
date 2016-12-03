@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CommonUtils/CommonUtils.iml" filepath="$PROJECT_DIR$/.idea/modules/CommonUtils/CommonUtils.iml" group="CommonUtils" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CommonUtils/CommonUtils_main.iml" filepath="$PROJECT_DIR$/.idea/modules/CommonUtils/CommonUtils_main.iml" group="CommonUtils" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CommonUtils/CommonUtils_test.iml" filepath="$PROJECT_DIR$/.idea/modules/CommonUtils/CommonUtils_test.iml" group="CommonUtils" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/JavaUtils.iml" filepath="$PROJECT_DIR$/.idea/modules/JavaUtils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/JavaUtils_main.iml" filepath="$PROJECT_DIR$/.idea/modules/JavaUtils_main.iml" group="JavaUtils" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/JavaUtils_test.iml" filepath="$PROJECT_DIR$/.idea/modules/JavaUtils_test.iml" group="JavaUtils" />
+    </modules>
+  </component>
+</project>
