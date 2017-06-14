@@ -9,7 +9,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/ApacheUtils" />
             <option value="$PROJECT_DIR$/CommonUtils" />
+            <option value="$PROJECT_DIR$/GuavaUtils" />
+            <option value="$PROJECT_DIR$/OtherUtils" />
           </set>
         </option>
       </GradleProjectSettings>
