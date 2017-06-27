@@ -1,12 +1,10 @@
 package com.xy.util;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
-import org.apache.http.ParseException;
+import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -28,8 +26,7 @@ import org.apache.http.ssl.TrustStrategy;
 import org.apache.http.util.EntityUtils;
 
 import javax.net.ssl.*;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
@@ -44,12 +41,12 @@ import java.security.cert.X509Certificate;
 public class HttpClientUtils {
 
     public static HttpClientUtils httpsClientUtils = null;
-    private static PoolingHttpClientConnectionManager cm = null;
+    private  PoolingHttpClientConnectionManager cm = null;
 
     private static String REQUEST_PROXY_IP = null;
     private static Integer REQUEST_PROXY_PORT = null;
 
-    private static final Integer HTTP_CLIENT_POOL_MAX_TOTAL = 100;
+    private static final Integer HTTP_CLIENT_POOL_MAX_TOTAL = 1;
     private static final Integer HTTP_CLIENT_POOL_MAX_PER_ROUTE = 10;
 
     private static final String EXCEPTION_METHOD_NOSUPPORT = "不支持的请求方法";
@@ -213,11 +210,12 @@ public class HttpClientUtils {
 
         // 内部工具类不验证输入数据，需调用者自己保证传入参数的合理性
         CloseableHttpClient httpClient = null;
+        HttpRequestBase httpRequest = null;
+        CloseableHttpResponse closeableHttpResponse = null;
 
         try {
-            httpClient = HttpClients.custom().setConnectionManager(cm).build();
+            httpClient = getConnection();
 
-            HttpRequestBase httpRequest = null;
             if (REQUEST_METHED_GET.equals(methed)) {
                 HttpGet httpGet = new HttpGet();
                 httpRequest = httpGet;
@@ -238,27 +236,78 @@ public class HttpClientUtils {
                 httpRequest.setConfig(RequestConfig.custom().setProxy(new HttpHost(REQUEST_PROXY_IP, REQUEST_PROXY_PORT)).build());
             }
 
-            return EntityUtils.toString(httpClient.execute(httpRequest).getEntity());
+            closeableHttpResponse =  httpClient.execute(httpRequest);
+            String response = EntityUtils.toString(closeableHttpResponse.getEntity());
+            return response;
         } catch (IOException | URISyntaxException e) {
             throw new HttpUtilsException(e.getMessage());
         } finally {
-            closeHttpClient(httpClient);
+            releaseConnection(httpRequest, closeableHttpResponse);
         }
     }
 
 
     /**
-     * 关闭httpclient连接
-     *
-     * @param httpClient 需关闭的连接
+     * 下载文件
+     * @param url 下载地址
+     * @param os 文件流
+     * @return
      */
-    private void closeHttpClient(CloseableHttpClient httpClient) {
+    public void dowloadFile(String url, OutputStream os) throws HttpUtilsException {
 
-        if (httpClient != null) {
-            try {
-                httpClient.close();
-            } catch (IOException e) {
+        CloseableHttpClient httpClient = null;
+        CloseableHttpResponse closeableHttpResponse = null;
+        HttpGet httpRequest = null;
+        try {
+             httpClient = getConnection();
+             httpRequest = new HttpGet();
+            httpRequest.setURI(new URI(url));
+
+            if (REQUEST_PROXY_IP != null && REQUEST_PROXY_PORT != null && !REQUEST_PROXY_IP.isEmpty()) {
+                // 设置代理
+                httpRequest.setConfig(RequestConfig.custom().setProxy(new HttpHost(REQUEST_PROXY_IP, REQUEST_PROXY_PORT)).build());
             }
+
+            closeableHttpResponse = httpClient.execute(httpRequest);
+
+            closeableHttpResponse.getEntity().writeTo(os);
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+            throw new HttpUtilsException(e.getMessage());
+        } finally {
+            releaseConnection(httpRequest, closeableHttpResponse);
+        }
+
+    }
+    /**
+     * 获取连接
+     *
+     * @param
+     */
+    private CloseableHttpClient getConnection()
+    {
+        CloseableHttpClient httpClient = HttpClients.custom().setConnectionManager(cm).build();
+        return httpClient;
+    }
+
+    /**
+     * 释放连接
+     *
+     * @param httpRequest 需关闭的连接
+     * @param closeableHttpResponse 需关闭的response
+     */
+    private void releaseConnection(HttpRequestBase httpRequest, CloseableHttpResponse closeableHttpResponse) {
+
+        if(closeableHttpResponse != null){
+            try {
+                closeableHttpResponse.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (httpRequest != null) {
+            httpRequest.releaseConnection();
         }
     }
 
