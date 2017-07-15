@@ -17,9 +17,9 @@ hs_err_pid*
 
 gradle
 logs
-.gradle
-.git
-.idea
+.gradle/*
+.git/*
+.idea/*
 /gradle/
 /logs/
 /.gradle/
