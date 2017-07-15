@@ -19,16 +19,16 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ApacheUtils_main" target="1.8" />
-      <module name="ApacheUtils_test" target="1.8" />
-      <module name="CommonUtils_main" target="1.8" />
-      <module name="CommonUtils_test" target="1.8" />
-      <module name="GuavaUtils_main" target="1.8" />
-      <module name="GuavaUtils_test" target="1.8" />
-      <module name="JavaUtils_main" target="1.5" />
-      <module name="JavaUtils_test" target="1.5" />
-      <module name="OtherUtils_main" target="1.8" />
-      <module name="OtherUtils_test" target="1.8" />
+      <module name="apache-utils_main" target="1.8" />
+      <module name="apache-utils_test" target="1.8" />
+      <module name="common-utils_main" target="1.8" />
+      <module name="common-utils_test" target="1.8" />
+      <module name="guava-utils_main" target="1.8" />
+      <module name="guava-utils_test" target="1.8" />
+      <module name="java-utils_main" target="1.5" />
+      <module name="java-utils_test" target="1.5" />
+      <module name="other-utils_main" target="1.8" />
+      <module name="other-utils_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

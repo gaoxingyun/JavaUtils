@@ -5,14 +5,15 @@
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="/usr/local/Cellar/gradle/2.14.1/wrapper" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/ApacheUtils" />
-            <option value="$PROJECT_DIR$/CommonUtils" />
-            <option value="$PROJECT_DIR$/GuavaUtils" />
-            <option value="$PROJECT_DIR$/OtherUtils" />
+            <option value="$PROJECT_DIR$/apache-utils" />
+            <option value="$PROJECT_DIR$/common-utils" />
+            <option value="$PROJECT_DIR$/guava-utils" />
+            <option value="$PROJECT_DIR$/other-utils" />
           </set>
         </option>
       </GradleProjectSettings>
