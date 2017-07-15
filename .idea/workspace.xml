@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="133e25dc-a5d1-4728-baed-2e064183e578" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ApacheUtils/src/main/java/com/xy/util/CompressUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ApacheUtils/src/main/test/com/xy/util/TestCompressUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OtherUtils/src/main/java/com/xy/util/JacksonCsvUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/OtherUtils/src/main/java/com/xy/util/WechatBillFile.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ApacheUtils/src/test/java/com/xy/util/TestHttpUtils.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/ApacheUtils/src/main/java/com/xy/util/TestHttpUtils.java" afterPath="$PROJECT_DIR$/ApacheUtils/src/main/test/com/xy/util/TestHttpUtils.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/GuavaUtils/src/test/java/test/com/xy/util/CacheUtils.java" afterPath="$PROJECT_DIR$/GuavaUtils/src/test/java/com/xy/util/CacheUtils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ApacheUtils/build.gradle" afterPath="$PROJECT_DIR$/ApacheUtils/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ApacheUtils/src/main/java/com/xy/util/HttpClientUtils.java" afterPath="$PROJECT_DIR$/ApacheUtils/src/main/java/com/xy/util/HttpClientUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CommonUtils/src/main/java/com/xy/util/TimestampUtils.java" afterPath="$PROJECT_DIR$/CommonUtils/src/main/java/com/xy/util/TimestampUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OtherUtils/build.gradle" afterPath="$PROJECT_DIR$/OtherUtils/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.gradle" afterPath="$PROJECT_DIR$/settings.gradle" />
     </list>
     <ignored path="JavaUtils.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -89,7 +79,28 @@
     <favorites_list name="JavaUtils" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.gradle" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/settings.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -1051,7 +1062,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/CommonUtils/src/test/java/com/xy/utils/MD5SignUtilTest.java" />
         <option value="$PROJECT_DIR$/CommonUtils/src/main/java/com/xy/utils/RandomStringGenerator.java" />
         <option value="$PROJECT_DIR$/CommonUtils/src/main/java/com/xy/utils/RandomStringGeneratorUtil.java" />
         <option value="$PROJECT_DIR$/CommonUtils/src/main/java/com/xy/utils/TimestampUtil.java" />
@@ -1102,6 +1112,7 @@
         <option value="$PROJECT_DIR$/ApacheUtils/src/main/test/com/xy/util/TestHttpUtils.java" />
         <option value="$PROJECT_DIR$/ApacheUtils/src/main/java/com/xy/util/HttpClientUtils.java" />
         <option value="$PROJECT_DIR$/CommonUtils/src/main/java/com/xy/util/TimestampUtils.java" />
+        <option value="$PROJECT_DIR$/settings.gradle" />
       </list>
     </option>
   </component>
@@ -1773,7 +1784,7 @@
       <workItem from="1498536381973" duration="12332000" />
       <workItem from="1498787544315" duration="1739000" />
       <workItem from="1500090133955" duration="1024000" />
-      <workItem from="1500091394764" duration="45000" />
+      <workItem from="1500091394764" duration="231000" />
     </task>
     <servers />
   </component>
@@ -1810,7 +1821,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="113485000" />
+    <option name="totallyTimeSpent" value="113671000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1823,7 +1834,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329602" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1833,7 +1844,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297568" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2835821" sideWeight="0.49570817" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17039801" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.329602" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.329602" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19098713" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1940,13 +1951,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.3/4969730c661fff76fa7f9d4c7c61545817f5b033/httpclient-4.5.3-sources.jar!/org/apache/http/conn/routing/HttpRoute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="259" column="0" selection-start-line="259" selection-start-column="0" selection-end-line="259" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.3/4969730c661fff76fa7f9d4c7c61545817f5b033/httpclient-4.5.3-sources.jar!/org/apache/http/client/protocol/RequestClientConnControl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="452">
@@ -2030,13 +2034,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="15" column="37" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -2281,6 +2278,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="15" column="7" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>

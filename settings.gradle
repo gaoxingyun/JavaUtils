@@ -1,6 +1,6 @@
-rootProject.name = 'JavaUtils'
-include 'CommonUtils'
-include 'ApacheUtils'
-include 'OtherUtils'
-include 'GuavaUtils'
+rootProject.name = 'java-utils'
+include 'common-utils'
+include 'apache-utils'
+include 'other-utils'
+include 'guava-utils'
 
