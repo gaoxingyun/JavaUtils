@@ -1,5 +1,7 @@
 package com.xy.util;
 
+import com.xy.util.HttpClientUtils;
+
 import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -35,22 +37,18 @@ public class TestHttpUtils {
 
     }
 
-
     public static void testDowload()
     {
-        String url = "https://doc.open.alipay.com/docs/doc.htm?spm=a219a.7629140.0.0.Ff5Bs5&treeId=193&articleId=106262&docType=1";
-
+        String url = "http://dwbillcenter.alipay.com/downloadBillFile.resource?bizType=trade&userId=20888021754107650156&fileType=csv.zip&bizDates=20170628&downloadFileName=20888021754107650156_20170628.csv.zip&fileId=%2Ftrade%2F20888021754107650156%2F20170628.csv.zip&timestamp=1498787283&token=64542d172f6899e94cf988f17f38532f";
+        String path = "";
         try {
-            OutputStream outputStream = new FileOutputStream("1.txt");
-            HttpClientUtils.getInstance().dowloadFile(url, outputStream);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            String res = HttpClientUtils.getInstance().dowloadFile(url, path);
+            System.out.println(res);
         } catch (HttpClientUtils.HttpUtilsException e) {
             e.printStackTrace();
         }
-
-
     }
+
 
 
     public static void main(String[] args) {

@@ -18,4 +18,6 @@ dependencies {
     compile('com.fasterxml.jackson.core:jackson-annotations:2.8.1')
     compile('com.fasterxml.jackson.core:jackson-databind:2.8.1')
     compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.8.1')
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.8.1')
+
 }

@@ -2,6 +2,9 @@ package com.xy.util;
 
 import java.util.Date;
 
+/**
+ * 系统时间戳工具
+ */
 public class TimestampUtils {
 
     /**

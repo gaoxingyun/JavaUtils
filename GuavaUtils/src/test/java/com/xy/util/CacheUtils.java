@@ -1,4 +1,4 @@
-package test.com.xy.util;
+package com.xy.util;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;

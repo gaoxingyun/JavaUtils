@@ -250,11 +250,12 @@ public class HttpClientUtils {
     /**
      * 下载文件
      * @param url 下载地址
-     * @param os 文件流
+     * @param filePath 文件路径
      * @return
      */
-    public void dowloadFile(String url, OutputStream os) throws HttpUtilsException {
+    public String dowloadFile(String url, String filePath) throws HttpUtilsException {
 
+        String fileName = null;
         CloseableHttpClient httpClient = null;
         CloseableHttpResponse closeableHttpResponse = null;
         HttpGet httpRequest = null;
@@ -269,15 +270,15 @@ public class HttpClientUtils {
             }
 
             closeableHttpResponse = httpClient.execute(httpRequest);
-
-            closeableHttpResponse.getEntity().writeTo(os);
+            fileName = filePath + closeableHttpResponse.getFirstHeader("Content-Disposition").getValue().split(";")[1];
+            closeableHttpResponse.getEntity().writeTo(new FileOutputStream(fileName.toString()));
         } catch (URISyntaxException | IOException e) {
             e.printStackTrace();
             throw new HttpUtilsException(e.getMessage());
         } finally {
             releaseConnection(httpRequest, closeableHttpResponse);
         }
-
+        return fileName.toString();
     }
     /**
      * 获取连接
@@ -312,9 +313,9 @@ public class HttpClientUtils {
     }
 
     /**
-     * 自定义Http受检异常类
+     * 自定义Http uncheck异常类
      */
-    class HttpUtilsException extends Exception {
+    class HttpUtilsException extends RuntimeException {
         HttpUtilsException(String msg) {
             super(msg);
         }
