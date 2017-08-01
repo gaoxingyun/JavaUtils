@@ -15,7 +15,7 @@ public class TestCompressUtils {
 
    public static void main(String[] argv)
    {
-       CompressUtils.decompressZip("//Users//xy//Downloads//2016050501366405_2017-06-26.csv.zip","GBK", "//Users//xy//Downloads//");
+       CompressUtils.decompressZip("//Users//xy//Downloads//20888021754107650156_20170731.csv.zip","GBK", "//Users//xy//Downloads//");
 
    }
 

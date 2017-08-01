@@ -15,7 +15,7 @@ public class TestHttpUtils {
     public static void testpost() {
 
 
-        String url = "http://pay.sandgate.cn";
+        String url = "https://139.199.199.130:13147/webank_cpre/order/pay";
         String json = "{\"hello\":\"world\"}";
 
         String res = null;
@@ -28,7 +28,7 @@ public class TestHttpUtils {
 //            res = HttpClientUtils.getInstance().sendHttpRequest(url, json, "application/json", "UTF-8", "POST");
 //            res = HttpClientUtils.getInstance().sendHttpRequest(url, json, "application/json", "UTF-8", "POST");
 
-            res = HttpClientUtils.getInstance().sendHttpRequest(url,null,null,"UTF-8", "GET");
+            res = HttpClientUtils.getInstance().sendHttpRequest(url,"fdsfs",null,"UTF-8", "POST","/Users/xy/Downloads/BD000004.jks", "Abcd1234" ,false);
             //res = HttpClientUtils.getInstance().sendHttpRequestByPost("https://www.baidu.com", json, "application/json;charset=utf-8", "UTF-8", "GET");
         } catch (HttpClientUtils.HttpUtilsException e) {
             e.printStackTrace();
@@ -52,7 +52,7 @@ public class TestHttpUtils {
 
 
     public static void main(String[] args) {
-//        testpost();
-        testDowload();
+        testpost();
+ //       testDowload();
     }
 }

@@ -1,9 +1,14 @@
 package com.xy.util;
 
 import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
+import org.apache.commons.compress.archivers.zip.ZipFile;
+import org.apache.commons.compress.utils.IOUtils;
 
 import java.io.*;
+import java.util.Enumeration;
+import java.util.NoSuchElementException;
 
 /**
  * 压缩工具类
@@ -14,60 +19,54 @@ public class CompressUtils {
 
     /**
      * 把zip文件解压到指定的文件夹
-     * @param zipFilePath   zip文件路径, 如 "D:/test/aa.zip"
+     * @param zipFilePathName   zip文件路径, 如 "D:/test/aa.zip"
      * @param saveFileDir   解压后的文件存放路径, 如"D:/test/"
      */
-    public static void decompressZip(String zipFilePath,String zipEncoding,String saveFileDir) {
-        if(isEndsWithZip(zipFilePath)) {
-            File file = new File(zipFilePath);
-            if(file.exists()) {
-                InputStream is = null;
-                //can read Zip archives
-                ZipArchiveInputStream zais = null;
-                try {
-                    is = new FileInputStream(file);
-                    zais = new ZipArchiveInputStream(is, zipEncoding);
-                    ArchiveEntry archiveEntry = null;
-                    //把zip包中的每个文件读取出来
-                    //然后把文件写到指定的文件夹
-                    while((archiveEntry = zais.getNextEntry()) != null) {
-                        //获取文件名
-                        String entryFileName = archiveEntry.getName();
-                        //构造解压出来的文件存放路径
-                        String entryFilePath = saveFileDir + entryFileName;
-                        byte[] content = new byte[(int) archiveEntry.getSize()];
-                        zais.read(content);
-                        OutputStream os = null;
-                        try {
-                            //把解压出来的文件写到指定路径
-                            File entryFile = new File(entryFilePath);
-                            os = new BufferedOutputStream(new FileOutputStream(entryFile));
-                            os.write(content);
-                        }catch(IOException e) {
-                            throw new IOException(e);
-                        }finally {
-                            if(os != null) {
-                                os.flush();
-                                os.close();
-                            }
-                        }
+    public static void decompressZip(String zipFilePathName,String zipEncoding,String saveFileDir) {
 
-                    }
-                }catch(Exception e) {
-                    throw new RuntimeException(e);
+        if(!isEndsWithZip(zipFilePathName)){
+            throw new RuntimeException("file is not endwith zip!");
+        }
+
+        File file = new File(zipFilePathName);
+        if(!file.exists()){
+            throw new RuntimeException("file is not exist!");
+        }
+
+        ZipFile zipFile = null;
+        InputStream is = null;
+        OutputStream os = null;
+
+
+        try {
+            zipFile = new ZipFile(file, zipEncoding);
+            Enumeration<ZipArchiveEntry> ZipArchiveEntrys = zipFile.getEntries();
+            ZipArchiveEntry archiveEntry = null;
+            while ((archiveEntry = ZipArchiveEntrys.nextElement()) != null){
+                try {
+                    is = zipFile.getInputStream(archiveEntry);
+                    byte[] content = IOUtils.toByteArray(is);
+                    String entryFileName = archiveEntry.getName();
+                    String entryFilePath = saveFileDir + entryFileName;
+                    File entryFile = new File(entryFilePath);
+                    os = new BufferedOutputStream(new FileOutputStream(entryFile));
+                    os.write(content);
+                }catch(IOException e) {
+                    throw new IOException(e);
                 }finally {
-                    try {
-                        if(zais != null) {
-                            zais.close();
-                        }
-                        if(is != null) {
-                            is.close();
-                        }
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                    if(os != null) {
+                        os.flush();
+                        os.close();
+                    }
+                    if(is != null){
+                        is.close();
                     }
                 }
             }
+        }catch (NoSuchElementException e){
+            // 最后一次读取不到实体异常，忽略
+        }catch (Exception e){
+            throw new RuntimeException(e);
         }
     }
 

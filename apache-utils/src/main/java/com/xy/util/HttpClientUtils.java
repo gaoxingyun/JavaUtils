@@ -15,6 +15,7 @@ import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -29,11 +30,11 @@ import javax.net.ssl.*;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
+import java.net.URL;
+import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Enumeration;
 
 /**
  * Http/Https工具类
@@ -58,22 +59,17 @@ public class HttpClientUtils {
     public static final String REQUEST_HEADER_ENCODING_UTF8 = "UTF-8";
     public static final String REQUEST_HEADER_ENCODING_GBK = "GBK";
 
-
     /**
      * 私有化构造器
      */
     private HttpClientUtils() {
-        try {
-            initPool();
-        } catch (KeyStoreException | NoSuchAlgorithmException | KeyManagementException e) {
-            e.printStackTrace();
-        }
+
     }
 
     /**
      * 初始化连接池
      */
-    private void initPool() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+    private synchronized void initPool() throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
 
         if (cm == null) {
             cm = new PoolingHttpClientConnectionManager(RegistryBuilder.<ConnectionSocketFactory>create().register("http", PlainConnectionSocketFactory.getSocketFactory()).register("https", new SSLConnectionSocketFactory(SSLContexts.custom().loadTrustMaterial(null, new TrustStrategy() {
@@ -196,17 +192,21 @@ public class HttpClientUtils {
     }
 
 
+
     /**
-     * 发送HTTP/HTTPS GET/POST请求(忽略证书) HttpClient 4.5使用
+     * 发送HTTP/HTTPS GET/POST请求(忽略证书) HttpClient 4.5使用连接池
      *
-     * @param url         请求地址
-     * @param data        请求数据
-     * @param contentType 请求数据类型
-     * @param encoding    请求数据编码
-     * @param methed      请求方式
-     * @return 返回响应值
+     * @param url           请求地址
+     * @param data          请求数据
+     * @param contentType   请求数据类型
+     * @param encoding      请求数据编码
+     * @param methed        请求方式
+     * @param certPath       密钥路径
+     * @param certPassword   密钥密码
+     * @param isUsePool     是否使用连接池
+     * @return              返回响应值
      */
-    public String sendHttpRequest(String url, String data, String contentType, String encoding, String methed) throws HttpUtilsException {
+    public String sendHttpRequest(String url, String data, String contentType, String encoding, String methed, String certPath, String certPassword, boolean isUsePool) throws HttpUtilsException {
 
         // 内部工具类不验证输入数据，需调用者自己保证传入参数的合理性
         CloseableHttpClient httpClient = null;
@@ -214,7 +214,12 @@ public class HttpClientUtils {
         CloseableHttpResponse closeableHttpResponse = null;
 
         try {
-            httpClient = getConnection();
+
+            if(isUsePool) {
+                httpClient = getConnectionFromPoll();
+            }else {
+                httpClient = getSSLConnection(certPath,certPassword);
+            }
 
             if (REQUEST_METHED_GET.equals(methed)) {
                 HttpGet httpGet = new HttpGet();
@@ -240,6 +245,7 @@ public class HttpClientUtils {
             String response = EntityUtils.toString(closeableHttpResponse.getEntity());
             return response;
         } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
             throw new HttpUtilsException(e.getMessage());
         } finally {
             releaseConnection(httpRequest, closeableHttpResponse);
@@ -260,7 +266,7 @@ public class HttpClientUtils {
         CloseableHttpResponse closeableHttpResponse = null;
         HttpGet httpRequest = null;
         try {
-             httpClient = getConnection();
+             httpClient = getConnectionFromPoll();
              httpRequest = new HttpGet();
             httpRequest.setURI(new URI(url));
 
@@ -281,13 +287,69 @@ public class HttpClientUtils {
         return fileName.toString();
     }
     /**
-     * 获取连接
+     * 获取连接使用连接池
      *
      * @param
      */
-    private CloseableHttpClient getConnection()
+    private CloseableHttpClient getConnectionFromPoll()
     {
+        if(cm == null){
+            try {
+                initPool();
+            } catch (KeyStoreException | NoSuchAlgorithmException | KeyManagementException e) {
+                e.printStackTrace();
+                throw new HttpUtilsException(e.getMessage());
+            }
+        }
         CloseableHttpClient httpClient = HttpClients.custom().setConnectionManager(cm).build();
+        return httpClient;
+    }
+
+    /**
+     * 获取连接
+     *
+     * @param certPath
+     * @param certPassword
+     *
+     */
+    private CloseableHttpClient getSSLConnection(String certPath, String certPassword)
+    {
+        CloseableHttpClient httpClient = null;
+        FileInputStream keyInstream = null;
+        FileInputStream TrustInstream = null;
+        try {
+            KeyStore trustStore  = KeyStore.getInstance("JKS");
+            //加载证书文件
+            TrustInstream = new FileInputStream(new File(certPath));
+            trustStore.load(TrustInstream, certPassword.toCharArray());
+
+            //HOST验证
+            HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+                public boolean verify(String s, SSLSession sslSession) {
+                    return true;
+                }
+            };
+            SSLContext sslContext = SSLContexts.custom().loadKeyMaterial(trustStore, certPassword.toCharArray()).loadTrustMaterial(trustStore, new TrustSelfSignedStrategy()).build();
+            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+                    sslContext, new String[] { "TLSv1" }, null,
+                    hostnameVerifier);
+            httpClient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+        } catch (IOException | CertificateException | NoSuchAlgorithmException |  KeyStoreException | KeyManagementException | UnrecoverableKeyException e) {
+            e.printStackTrace();
+            throw new HttpUtilsException(e.getMessage());
+        } finally {
+            try {
+                if(keyInstream != null) {
+                    keyInstream.close();
+                }
+                if(TrustInstream != null) {
+                    TrustInstream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
         return httpClient;
     }
 
