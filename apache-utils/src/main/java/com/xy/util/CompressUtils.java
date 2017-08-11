@@ -37,7 +37,6 @@ public class CompressUtils {
         InputStream is = null;
         OutputStream os = null;
 
-
         try {
             zipFile = new ZipFile(file, zipEncoding);
             Enumeration<ZipArchiveEntry> ZipArchiveEntrys = zipFile.getEntries();
@@ -67,6 +66,14 @@ public class CompressUtils {
             // 最后一次读取不到实体异常，忽略
         }catch (Exception e){
             throw new RuntimeException(e);
+        }finally {
+            if (zipFile != null) {
+                try {
+                    zipFile.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

@@ -55,6 +55,7 @@ public class JacksonUtils {
      */
     public static <T> T mapToBean(Map<String, Object> map, Class<T> cls) throws IOException {
        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return objectMapper.convertValue(map, cls);
     }
 
