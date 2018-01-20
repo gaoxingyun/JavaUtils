@@ -20,4 +20,7 @@ dependencies {
     compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.8.1')
     compile('com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.8.1')
 
+    compile('com.google.zxing:core:+')
+    compile('com.google.zxing:javase:+')
+
 }

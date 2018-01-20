@@ -28,7 +28,7 @@ public class TimestampUtils {
      * @return 时间戳（秒）
      */
     public static long getTimestamp() {
-        long serverTimestamp = new Date().getTime() / 1000;
+        long serverTimestamp = System.currentTimeMillis() / 1000;
         return serverTimestamp;
     }
 }

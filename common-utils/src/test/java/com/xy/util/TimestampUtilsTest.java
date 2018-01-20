@@ -57,7 +57,8 @@ public class TimestampUtilsTest {
      */
     @Test
     public void testGetTimestamp() throws Exception {
-
+        Long timestamp = TimestampUtils.getTimestamp();
+        System.out.println(timestamp);
     }
 
     @Test
