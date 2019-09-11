@@ -510,7 +510,7 @@ class IsoFieldSchema {
 
     private IsoFieldSchema() {
         isoSchema.put("MTI", new IsoFieldInfo(IsoFieldType.N, IsoLengthType.FIXED, 4));
-        isoSchema.put("2", new IsoFieldInfo(IsoFieldType.N, IsoLengthType.FIXED, 19));
+        isoSchema.put("2", new IsoFieldInfo(IsoFieldType.N, IsoLengthType.LLVAR, 19));
         isoSchema.put("3", new IsoFieldInfo(IsoFieldType.N, IsoLengthType.FIXED, 6));
         isoSchema.put("4", new IsoFieldInfo(IsoFieldType.N, IsoLengthType.FIXED, 12));
         isoSchema.put("5", new IsoFieldInfo(IsoFieldType.N, IsoLengthType.FIXED, 12));
