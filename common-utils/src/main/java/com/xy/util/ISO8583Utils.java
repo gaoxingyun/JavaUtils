@@ -1,5 +1,7 @@
 package com.xy.util;
 
+
+
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,14 +13,13 @@ import java.util.Map;
  */
 public class ISO8583Utils {
 
-
     /**
      * 打包
      *
      * @param isoMessageMap
      * @return
      */
-    public static byte[] pack(HashMap<String, String> isoMessageMap) {
+    public static byte[] pack(Map<String, String> isoMessageMap) {
         ISO8583 iso8583 = new ISO8583(isoMessageMap);
         try {
             iso8583.pack();
@@ -34,7 +35,7 @@ public class ISO8583Utils {
      * @param isoMessageData
      * @return
      */
-    public static HashMap<String, String> unpack(byte[] isoMessageData) {
+    public static Map<String, String> unpack(byte[] isoMessageData) {
 
         ISO8583 iso8583 = new ISO8583(isoMessageData);
 
@@ -68,13 +69,13 @@ class ISO8583 {
     /**
      * ISO8583报文域数据
      */
-    private HashMap<String, String> ISO_MESSAGE_MAP;
+    private Map<String, String> ISO_MESSAGE_MAP;
     /**
      * ISO8583报文数据
      */
     private byte[] ISO_MESSAGE_DATA;
 
-    public ISO8583(HashMap<String, String> isoMessageMap) {
+    public ISO8583(Map<String, String> isoMessageMap) {
         this.ISO_MESSAGE_MAP = isoMessageMap;
     }
 
@@ -83,7 +84,7 @@ class ISO8583 {
     }
 
 
-    public HashMap<String, String> getISO_MESSAGE_MAP() {
+    public Map<String, String> getISO_MESSAGE_MAP() {
         return ISO_MESSAGE_MAP;
     }
 
@@ -178,7 +179,26 @@ class ISO8583 {
                             }
 
                         } else if (IsoFieldSchema.IsoLengthType.LLVAR.equals(lengthType)) {
-                            throw new RuntimeException("not support field type!");
+
+                            if (IsoFieldSchema.IsoFieldType.N.equals(fieldType)) {
+                                byte[] fieldLengthBytes = new byte[1];
+                                System.arraycopy(ISO_MESSAGE_DATA, index, fieldLengthBytes, 0, 1);
+                                index += 1;
+                                fieldLength = Integer.valueOf(bcd2str(fieldLengthBytes));
+
+                                int byteTempLength = fieldLength / 2;
+                                if (fieldLength % 2 != 0) {
+                                    byteTempLength = byteTempLength + 1;
+                                }
+
+                                fieldBytes = new byte[byteTempLength];
+                                System.arraycopy(ISO_MESSAGE_DATA, index, fieldBytes, 0, byteTempLength);
+                                index += byteTempLength;
+                                fieldValue = bcd2str(fieldBytes).substring(0, fieldLength);
+
+                            } else {
+                                throw new RuntimeException("not support field type!");
+                            }
                         } else if (IsoFieldSchema.IsoLengthType.LLLVAR.equals(lengthType)) {
 
                             if (IsoFieldSchema.IsoFieldType.N.equals(fieldType)) {
@@ -334,7 +354,7 @@ class ISO8583 {
                 String lengthFormat = "%0" + lengthType.getLength() + "d";
                 baos.write(str2bcd_l(String.format(lengthFormat, fieldValue.length())));
             }
-            baos.write(str2bcd_l(fieldValue));
+            baos.write(str2bcd_r(fieldValue));
         } else if (fieldType.equals(IsoFieldSchema.IsoFieldType.B)) {
             if (lengthType.equals(IsoFieldSchema.IsoLengthType.FIXED)) {
                 baos.write(hex2bytes(fieldValue));
