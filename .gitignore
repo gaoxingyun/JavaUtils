@@ -25,3 +25,5 @@ logs
 /.gradle/
 /.git/
 /.idea/
+*.prefs
+.project
